@@ -2,7 +2,8 @@
 
 [![Demo Video](https://img.youtube.com/vi/dXSMtpPaXHQ/0.jpg)](https://www.youtube.com/watch?v=dXSMtpPaXHQ)
 
-*Click the image above to watch the demo video*
+*Using the bot it took 10:32 to name every single Pokemon (minus 3)*
+
 
 ## Overview
 This project automates the Pokemon Quiz game using computer vision and image processing. It includes three main components:
