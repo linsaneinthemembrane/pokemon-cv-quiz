@@ -14,26 +14,25 @@ def get_pokemon_names(folder_path):
     return pokemon_dict
 
 def preprocess_template(template):
-    # Convert to grayscale
+    # convert to grayscale
     gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-    # Create binary mask
+    # create binary mask
     _, binary = cv2.threshold(gray, 1, 255, cv2.THRESH_BINARY)
-    # Convert to solid gray (128,128,128) like in the quiz
+    # convert to solid gray (128,128,128) like in the quiz
     result = np.zeros_like(gray)
     result[binary > 0] = 128
     return result
 
 def match_silhouette(screenshot, template, pokemon_name):
-    # Show what we're processing
     processed_template = preprocess_template(template)
     
-    # Display current processing
+    # display current processing
     cv2.imshow('Current Pokemon', template)
     cv2.imshow('Processed Template', processed_template)
     cv2.imshow('Screenshot', screenshot)
     cv2.waitKey(1)
     
-    # Try multiple scales
+    # tried multiple scales, best was .1
     scales = [0.1]
     max_confidence = 0
     
@@ -61,22 +60,22 @@ def setup_window_capture():
     return window
 
 def play_quiz():
-    # Setup window capture
+    # setup window capture
     quiz_window = gw.getWindowsWithTitle("Pokémon Quiz - Google Chrome")[0]
     quiz_window.activate()
-    time.sleep(2)  # Give time for window to activate
+    time.sleep(2)  # give time for window to activate
     
-    # Load reference silhouettes
+    # load reference silhouettes
     silhouettes_path = "pokemon_sprites"
     pokemon_names = get_pokemon_names(silhouettes_path)
     matched_pokemon = set()  # Track matches
-    
+    # debug messages
     print("Starting Pokemon Quiz automation...")
     print(f"Loaded {len(pokemon_names)} Pokemon references")
     
     while True:
         try:
-            # Capture full window
+            # capture full window
             screenshot = pyautogui.screenshot(region=(
                 quiz_window.left,
                 quiz_window.top,
@@ -84,17 +83,17 @@ def play_quiz():
                 quiz_window.height
             ))
             
-            # Convert to numpy array for OpenCV
+            # convert to numpy array for OpenCV
             screenshot = np.array(screenshot)
             screenshot = cv2.cvtColor(screenshot, cv2.COLOR_RGB2BGR)
             
-            # Save current screenshot for debugging
+            # save current screenshot for debugging
             cv2.imwrite('current_screen.png', screenshot)
             
-            # Convert to grayscale for processing
+            # convert to grayscale for processing
             gray_screenshot = cv2.cvtColor(screenshot, cv2.COLOR_BGR2GRAY)
             
-            # Process each Pokemon
+            # process each Pokemon
             for filename, pokemon_name in pokemon_names.items():
                 if pokemon_name in matched_pokemon:
                     continue
@@ -108,22 +107,22 @@ def play_quiz():
                 
                 confidence = match_silhouette(gray_screenshot, template, pokemon_name)
                 
-                if confidence > 0.6:  # Adjust threshold as needed
+                if confidence > 0.6:  # adjust threshold as needed
                     print(f"Match found: {pokemon_name} ({confidence:.2f})")
                     pyautogui.write(pokemon_name)
                     pyautogui.press('enter')
                     matched_pokemon.add(pokemon_name)
-                    time.sleep(0.3)  # Brief delay between entries
+                    time.sleep(0.3)  # brief delay between entries
             
-            # Optional: Print progress
+            # optional: print progress
             print(f"Current matches: {len(matched_pokemon)}/{len(pokemon_names)}")
             
-            # Exit if mouse moved to top-left corner
+            # exit if mouse moved to top-left corner
             if pyautogui.position().x == 0 and pyautogui.position().y == 0:
                 print("Exit signal received")
                 break
                 
-            time.sleep(0.005)  # Small delay to prevent excessive CPU usage
+            time.sleep(0.005)  # small delay to prevent excessive CPU usage
             
         except Exception as e:
             print(f"Error during processing: {str(e)}")
