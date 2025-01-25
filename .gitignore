@@ -1,5 +1,4 @@
 # .gitignore
 pokemon_sprites/*
-pokemon_sprites_pre/*
-!pokemon_sprites/.gitkeep
-!pokemon_sprites_pre/.gitkeep
+pokemon_sprites_preprocessed/*
+
