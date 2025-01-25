@@ -25,19 +25,19 @@ def create_silhouettes():
                 output_path = os.path.join(silhouette_folder, filename)
                 
                 try:
-                    # Convert to binary mask
+                    # convert to binary mask
                     image = Image.open(input_path).convert('RGBA')
                     
                     mask = image.split()[3]
                     
-                    # Fill with gray
-                    gray_value = 128  # Medium gray
+                    # fill with gray
+                    gray_value = 128  # medium gray rgb value
                     silhouette = Image.new('RGB', image.size, (gray_value, gray_value, gray_value))
                     
-                    # Apply mask
+                    # apply mask
                     silhouette.putalpha(mask)
                     
-                    # Save as PNG
+                    # save as PNG
                     silhouette.save(output_path, 'PNG')
                     print(f"Created silhouette for {filename}")
                 except UnidentifiedImageError:
