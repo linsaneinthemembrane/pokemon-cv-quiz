@@ -1,8 +1,8 @@
 # Pokemon CV Quiz Automation
 
 [![Demo Video](https://github.com/linsaneinthemembrane/pokemon-cv-quiz/blob/main/pokemon-cv-quiz.gif)](https://www.youtube.com/watch?v=dXSMtpPaXHQ)
-
-*Using the bot it took 10:32 to name every single Pokemon (minus 3)*
+*click above to watch the demo video*
+Using the bot it took 10:32 to name every single Pokemon (minus 3)
 
 
 ## Overview
