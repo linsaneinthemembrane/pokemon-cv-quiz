@@ -4,7 +4,7 @@
 
 *click above to watch the demo video*
 
-Using the bot it took 10:32 to name every single Pokemon (minus 3)
+Using the bot, it took 10:32 to name every single Pokemon (minus 3)
 
 
 ## Overview
